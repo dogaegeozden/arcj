@@ -13,7 +13,6 @@ nIRP = []
 helpTxt = f'\033[1m' + "NAME" + '\033[0m' + "\n\t" + 'arcj - A command line tool to change the mac address of the wifi adoptor automatically.\n\n' + '\033[1m' + 'USAGE' + '\033[0m'+ "\n\t" + 'arcj [OPTION]' + "\n\n" + '\033[1m' + 'DESCRIPTION' + '\033[0m' +"\n\t" + "Change your computer's mac address and decide if you want connect back to the internet automatically.\n\n" + '\033[1m' + 'OPTIONS' + '\033[0m' + "\n\t" + f'{connectionOpts[0]}, {connectionOpts[1]} \n\t\tUse this option to connect back to the internet automatically.' + "\n\n" + '\033[1m' + 'EXAMPLES' + '\033[0m' + "\n\t" + f'arcj {connectionOpts[0]}\n\n'
 
 # FUNCTIONS
-
 def rPIC():
     """A function that checks if required packages are installed."""
 
