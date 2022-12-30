@@ -86,7 +86,8 @@ def rPIC():
 
 def changeTheMacAddr(cC=False):
     """A function that changes the computer's mac address."""
-
+    # Printing the connection choice in debug mode.
+    debug(f'Connection Choice = {cC}')
     # Executing a system command to and out put which includes the wifi adaptors name.
     wifiAdaptorN = popen(f'iw dev').read()
 
