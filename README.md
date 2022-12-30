@@ -1,7 +1,7 @@
 # ARCANE JUICE
 ![ArcaneJuiceLogo](https://cdn.pixabay.com/photo/2022/09/01/14/35/elixir-7425632_960_720.png)
 
-Arcane juice is a command line tool to automatically manipulate your mac address and connect to the wifi. 
+Arcane juice is a command line tool to manipulate the mac address. 
 
 ## INSTALLATION
 1) ```git clone https://github.com/tamrinotte/arcj.git```
@@ -10,9 +10,10 @@ Arcane juice is a command line tool to automatically manipulate your mac address
 4) ```sudo chown $USER:$USER /usr/bin/arcj && sudo chmod u+x /usr/bin/arcj```
 
 ## OPTIONS 
-    -c, --connection 
-		Use this option to connect back to the internet automatically.
+	-c, --connection 
+		Use this option to connect back to the wifi automatically.
+
 
 ## EXAMPLES
     arcj
-	arcj -c
+    arcj -c
