@@ -15,11 +15,11 @@ disable(CRITICAL)
 
 # VARIABLES
 # Creating a list of help options
-helpOpts = ["--help", "-help", "-h", "-?"]
+helpOpts = ["-h", "--help", "-help", "-?"]
 # Creating a list of connection choice options
 connectionOpts = ["-c", "--connection"]
 # Creating the help text
-helpTxt = f'\033[1m' + "NAME" + '\033[0m' + "\n\t" + 'arcj - A command line tool to change the mac address of the wifi adoptor automatically.\n\n' + '\033[1m' + 'USAGE' + '\033[0m'+ "\n\t" + 'arcj [OPTION]' + "\n\n" + '\033[1m' + 'DESCRIPTION' + '\033[0m' +"\n\t" + "Change your computer's mac address and decide if you want connect back to the internet automatically.\n\n" + '\033[1m' + 'OPTIONS' + '\033[0m' + "\n\t" + f'{connectionOpts[0]}, {connectionOpts[1]} \n\t\tUse this option to connect back to the internet automatically.' + "\n\n" + '\033[1m' + 'EXAMPLES' + '\033[0m' + "\n\t" + f'arcj {connectionOpts[0]}\n\n'
+helpTxt = f'\033[1m' + "NAME" + '\033[0m' + "\n\t" + 'arcj - A command line tool to manipulate the mac address.\n\n' + '\033[1m' + 'USAGE' + '\033[0m'+ "\n\t" + 'arcj [OPTION]' + "\n\n" + '\033[1m' + 'DESCRIPTION' + '\033[0m' +"\n\t" + "Manipulate your computer's mac address and connect to wifi automatically.\n\n" + '\033[1m' + 'OPTIONS' + '\033[0m' + "\n\t" + f'{connectionOpts[0]}, {connectionOpts[1]} \n\t\tUse this option to connect back to the wifi automatically.' + "\n\n" + '\033[1m' + 'EXAMPLES' + '\033[0m' + "\n\t" + f'arcj\n\t' + f'arcj {connectionOpts[0]}\n\n'
 
 def main():
     """The function which runs the entire program"""
@@ -30,19 +30,22 @@ def main():
             # Printing the help text
             print(helpTxt)
 
-            # Checking if only 2 arguments are entered and the argument which is entered after program name is a connection option
+        # Checking if only 2 arguments are entered and the argument which is entered after program name is a connection option
         elif len(argv) == 2 and argv[1] in connectionOpts:
             # Calling the changeTheMacAddr function by passing True as an argument
             changeTheMacAddr(True)
 
-            # Checking if user only enterd the program name.
+        # Checking if user only enterd the program name.
         elif len(argv) == 1:
             # Calling the changeTheMacAddr function with default connection choice, which is False.
             changeTheMacAddr()
 
-            # Printing the list of softwares that are not installed if all softwares are not installed.
         else:
-            print(f'These softwares {rPIC()[1]} are not available on your system. You need to make sure all the required softwares are available on your system.')
+            print("Invalid syntax type arcj %s to get more information." % helpOpts[0])
+
+    # Printing the list of softwares that are not installed if all softwares are not installed.
+    else:
+        print(f'These softwares {rPIC()[1]} are not available on your system. You need to make sure all the required softwares are available on your system.')
 
 # FUNCTIONS
 def rPIC():
