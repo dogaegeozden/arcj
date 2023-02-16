@@ -10,7 +10,7 @@ from logging import basicConfig, DEBUG, debug, disable, CRITICAL
 # Doing the basic configuration for the debugging feature
 basicConfig(level=DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Comment out the line to enable debugging.
+# Diabling the debugging feature. Hint: Comment out the line to enable debugging.
 disable(CRITICAL)
 
 # VARIABLES
@@ -23,63 +23,70 @@ helpTxt = f'\033[1m' + "NAME" + '\033[0m' + "\n\t" + 'arcj - A command line tool
 
 def main():
     """The function which runs the entire program"""
+
     # Checking if all required softwares are installed.
     if rPIC()[0] == 2:
-        # Checing if the first argument is in help options
+        # Checking if the length of list of argument is equal to 2 and the first argument is in help options
         if len(argv) == 2 and argv[1] in helpOpts:
             # Printing the help text
             print(helpTxt)
 
-        # Checking if only 2 arguments are entered and the argument which is entered after program name is a connection option
+        # Checking if only 2 arguments are entered and the second argument is a connection option
         elif len(argv) == 2 and argv[1] in connectionOpts:
             # Calling the changeTheMacAddr function by passing True as an argument
             changeTheMacAddr(True)
 
-        # Checking if user only enterd the program name.
+        # Checking if user only entered the program name.
         elif len(argv) == 1:
-            # Calling the changeTheMacAddr function with default connection choice, which is False.
+            # Calling the changeTheMacAddr function with the default connection choice, which is False.
             changeTheMacAddr()
 
+        # Telling computer what to do if any of the conditionals above didn't returned True.
         else:
+            # Telling to the user what went wrong. What she/he should do to get more information.
             print("Invalid syntax type arcj %s to get more information." % helpOpts[0])
 
-    # Printing the list of softwares that are not installed if all softwares are not installed.
+    # Checking if any of the required softwares are not installed.
     else:
+        # Printing the list of softwares that are not installed.
         print(f'These softwares {rPIC()[1]} are not available on your system. You need to make sure all the required softwares are available on your system.')
 
 # FUNCTIONS
 def rPIC():
     """A function that checks if required softwares are installed."""
+
     # Creating a list for the the required softwares
     lORS = ['net-tools', 'macchanger']
-    # Creating a list for not installed softwares
+    # Creating a list for the required softwares that are not installed.
     listOfNIRS = []
     # Creating a variable to keep track of the number of installed softwares.
     numOfIRS = 0
 
-    # Looping through each package in the list of required softwares.
+    # Iterating through each package in the list of required softwares.
     for p in lORS:
-        # Executing a system command and reading it's out put to get critical information which is useful to identify if a software is installed or not.
+        # Executing a system command and reading it's out put, to get the information which states the installation status of the software.
         iC = popen(f'apt-cache policy {p}').read()
-        # Checking if the "(none)" is keyword is in the iC variable. Hint: If "(none)" is out put of the system command, it means software is not installed.
+        # Checking if the "(none)" keyword is in the iC variable. Hint: If "(none)" keyword is in the out put of the system command, it means that the software is not installed.
         if '(none)' in iC:
-            # Asking to user if he/she is allowing this software to installed the required fotware
+            # Asking to the user, if he/she is allowing this software to install the required software
             installPermission = input(f'arcj command line tool need {p} software to work properly. Do you give your permission to it\'s installation? (y/n): ').lower().strip()
-            # Installing the software if the user is answered with y/yes to question
+            # Checking if the user answered to the previous question with yes.
             if installPermission == "y" or installPermission == "yes":
+                # Installing the software.
                 system(f'apt install {p} -y')
 
-        # Executing a system command and reading it's out put to get critical information which is useful to identify if a software is installed or not.
+        # Executing a system commmand and readind it's out put to get the information which states the installation status of the software.
         iC = popen(f'apt-cache policy {p}').read()
-        # Increasing the number of nIRS(Number of installed required softwares)
+        # Checking if the "(none)" keyword is not in the iC variable. Hint: If "(none)" keyword is not in the in the variable it means the software is installed.
         if "(none)" not in iC:
+            # Increasing the number of nIRS(Number of installed required softwares)
             numOfIRS += 1
 
-    # Looping through each software in the list of required softwares
+    # Iterating through each software in the lORS list(list of required softwares)
     for p in lORS:
-        # Executing a system command and reading it's out put to get critical information which is useful to identify if a software is installed or not.
+        # Executing a system command and reading it's out put to get the information which states the installation status of the software.
         iC = popen(f'apt-cache policy {p}').read()
-        # Checking if "(none)" keyword is in the system command's out put. Hint: Which means it's not installed.
+        # Checking if the "(none)" keyword is in the system command's out put. Hint: If the "(none)" keyword is in the system command's out put it means that the software is not installed.
         if '(none)' in iC:
             # Appending the software name to the list of not installed required softwares(nIRS)
             listOfNIRS.append(p)
@@ -89,53 +96,55 @@ def rPIC():
 
 def changeTheMacAddr(cC=False):
     """A function that changes the computer's mac address."""
+
     # Printing the connection choice in debug mode.
     debug(f'Connection Choice = {cC}')
-    # Executing a system command to and out put which includes the wifi adaptors name.
+    # Executing a system command and reading it's out put to get the wifi adaptor's name.
     wifiAdaptorN = popen(f'iw dev').read()
 
     # Creating a temporary file path.
     wifiAdaptorTempFile = Path('/tmp/hwfile.txt')
 
-    # Creating a new file and writing the information which is gathered from the system command.
+    # Opening a new file in write mode
     with open(wifiAdaptorTempFile, 'w') as hwFile:
+        # Writing the wifi adaptor's name in to the file
         hwFile.write(wifiAdaptorN)
 
-    # Opening the temporary file in reading mode.
+    # Opening the temporary file in read mode.
     hwFile = open("/tmp/hwfile.txt", "r")
     # Creating a list from the temporary file's lines.
     listOfTempFileLines = hwFile.readlines()
     # Closing the temporary file.
     hwFile.close()
 
-    # Looping through each line in the list of temporary file lines.
+    # Iterating through each line in the listOfTempFileLines(list of temporary file's lines) list.
     for line in listOfTempFileLines:
         # Checking the line is including the "Interface" keyword.
         if "Interface" in line:
-            # Finding the index number of starting point of the wifi adapter name
+            # Finding the wifi adaptor's name's starting point's index file
             tIndex = line.find("Interface")+len("Interface")+1
-            # Creating a variable which contains the wifi adaptor name.
+            # Finding the wifi adaptor's name's starting point's index file
             wifiAdaptorN = line[tIndex:]
 
-    # Priting the wifi adaptor name.
+    # Printing the wifi adaptor's name.
     print(f'Wifi Adaptor Name = {wifiAdaptorN}')
-    # Shuting down the wifi adaptor
+    # Shutting down the wifi adaptor
     system(f'ifconfig {wifiAdaptorN} down')
-    # Disabling the networking and NetworkManager services
-    system(f'systemctl stop NetworkManager.service ; systemctl stop networking.service')
+    # Disabling NetworkManager services
+    system(f'systemctl stop NetworkManager.service')
     # Manipulating the mac address to something random
     system(f'macchanger -rp {wifiAdaptorN}')
     # Starting the NetworkManager service
     system(f'systemctl start NetworkManager.service')
     # Turning on the wifi adaptor
     system(f'ifconfig {wifiAdaptorN} up')
-    # Checking connection choice is True
+    # Checking if the cC variable(connection choice) is equal to True
     if cC == True:
         # Instructing the computer to wait 4 seconds.
         sleep(4) # Some times it takes time
         # Connecting to the internet.
         system(f'nmcli d connect {wifiAdaptorN} private yes')
 
-# Evaluate if the source is being run on its own or being imported somewhere else. With this conditional in place, your code can not be imported somewhere else.
+# Evaluating if the source is being run on its own or being imported somewhere else. With this conditional in place, your code can not be imported somewhere else.
 if __name__ == '__main__':
     main()
