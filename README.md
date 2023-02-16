@@ -4,7 +4,7 @@
 Arcane juice is a command line tool to manipulate the mac address. 
 
 ## INSTALLATION
-1) ```curl -L ```
+1) ```curl -L https://github.com/dogaegeozden/arcj/releases/download/Anonymity/arcj.deb -o arcj.deb```
 2) ```sudo dpkg -i arcj.deb```
 
 ## OPTIONS 
